@@ -1,0 +1,14 @@
+# This handles the imports
+general.import = [
+  "~/.config/alacritty/catppuccin-mocha.toml"
+]
+
+# This handles the window
+[window]
+padding.x = 15
+padding.y = 15
+title="Alacritty"
+
+[font]
+normal.family = "JetbrainsMonoNerdFont"
+size = 13
