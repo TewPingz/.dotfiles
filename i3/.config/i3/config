@@ -20,6 +20,8 @@ font pango:JetbrainsMonoNerdFont 14
 #font pango:DejaVu Sans Mono 8
 
 # Split out the ultrawide monitor into 3 virtual monitors
+# This does not do anything if there is no ultrawide monitor
+# connected
 exec --no-startup-id ~/.config/i3/scripts/layout_16_9_center.sh
 
 # Start XDG autostart .desktop files using dex. See also
@@ -37,6 +39,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
+# Setup picom as my compositor so the wm doesnt look choppy
 exec --no-startup-id picom
 
 # Use pactl to adjust volume in PulseAudio.
@@ -53,10 +56,11 @@ floating_modifier $mod
 # or left-clicking anywhere into the window while holding the floating modifier.
 tiling_drag modifier titlebar
 
+# Launch my bars for my monitors
 exec_always --no-startup-id ~/.config/polybar/launch_bar.sh
 
 # start a terminal
-bindsym $mod+Return exec alacritty 
+bindsym $mod+Return exec ghostty 
 
 # kill focused window
 bindsym $mod+Shift+q kill
