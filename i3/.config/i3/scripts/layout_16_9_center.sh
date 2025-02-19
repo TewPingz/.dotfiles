@@ -1,4 +1,9 @@
 #!/bin/bash
+
+if ! xrandr | grep "5120x1440"; then 
+  exit 1
+fi
+
 xrandr --output DP-2 --mode 5120x1440 --primary --scale 1x1 --pos 0x0 --panning 5120x1440 \
 && xrandr --output DP-2 --setmonitor Monitor2 1280/298x1440/340+0+0 DP-2 \
 && xrandr --output DP-2 --setmonitor Monitor1 2560/595x1440/340+1280+0 none \
