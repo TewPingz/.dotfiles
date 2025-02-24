@@ -8,13 +8,21 @@ return {
     },
     config = function()
       require('telescope').setup {
-        pickers = {
-          find_files = {
-            theme = "ivy"
-          }
-        },
         extensions = {
           fzf = {}
+        },
+        defaults = {
+          layout_strategy = 'bottom_pane',
+          sorting_strategy = 'ascending',
+          layout_config = {
+            height = 25,
+          },
+          border = true,
+          borderchars = {
+            prompt = { "─", " ", " ", " ", "─", "─", " ", " " },
+            results = { " " },
+            preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+          },
         }
       }
 
@@ -28,7 +36,7 @@ return {
         }
       end)
       vim.keymap.set('n', '<leader>ps', function()
-            require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
+        require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })
       end)
       vim.keymap.set("n", "<space>ep", function()
         require('telescope.builtin').find_files {
