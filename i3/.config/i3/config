@@ -201,3 +201,5 @@ gaps inner 10
 
 default_border pixel 3 
 default_floating_border pixel 3 
+
+focus_follows_mouse no

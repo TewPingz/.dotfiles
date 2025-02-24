@@ -1,9 +1,26 @@
 return {
   {
-    "zk-org/zk-nvim",
+    "TewPingz/zk-nvim",
+    branch = "picker_options",
     config = function()
       require("zk").setup({
         picker = "telescope",
+
+        picker_options = {
+          telescope = {
+            layout_strategy = 'bottom_pane',
+            sorting_strategy = 'ascending',
+            layout_config = {
+              height = 25,
+            },
+            border = true,
+            borderchars = {
+              prompt = { "─", " ", " ", " ", "─", "─", " ", " " },
+              results = { " " },
+              preview = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+            },
+          },
+        },
 
         lsp = {
           config = {
