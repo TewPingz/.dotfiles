@@ -1,53 +1,77 @@
 return {
   {
-    "TewPingz/zk-nvim",
-    branch = "picker_options",
-    config = function()
-      require("zk").setup({
-        picker = "snacks_picker",
+    "zk-org/zk-nvim",
+    dependencies = {
+      "folke/snacks.nvim"
+    },
+    cmd = { 'ZkNew', 'ZkNotes', 'ZkInsertLink', 'ZkInsertLinkAt', 'ZkBacklinks' },
+    opts = {
+      picker = "snacks_picker",
 
-        picker_options = {
-          snacks_picker = {
-            layout = {
-              preset = "ivy",
-            },
-          }
+      lsp = {
+        config = {
+          cmd = { "zk", "lsp" },
+          name = "zk",
         },
 
-        lsp = {
-          config = {
-            cmd = { "zk", "lsp" },
-            name = "zk",
-          },
-
-          auto_attach = {
-            enabled = true,
-            filetypes = { "markdown" },
-          },
+        auto_attach = {
+          enabled = true,
+          filetypes = { "markdown" },
         },
-      })
-
-      local opts = { noremap = true, silent = false }
-
-      vim.api.nvim_set_keymap("n", "<leader>zn", "", {
-        callback = function()
+      },
+    },
+    keys = {
+      {
+        "<leader>zn",
+        function()
           vim.ui.input({ prompt = "Note Title: " }, function(title)
             if not title or title == "" then return end
-            vim.ui.select({ "Fleeting", "Literature", "Permanent" }, { prompt = "Note Type: " }, function(template)
+            vim.ui.select({ "Literature", "Atomic" }, { prompt = "Note Type: " }, function(template)
               if not template or template == "" then return end
-              require("zk").new({ title = title, template = string.lower(template) .. ".md" })
+              require("zk").new({ title = title, dir = string.lower(template) })
             end)
           end)
-        end
-      })
+        end,
+        desc = "Create a new Zk note with a specific template"
+      },
 
-      vim.api.nvim_set_keymap("n", "<leader>zo", "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", opts)
-      vim.api.nvim_set_keymap("n", "<leader>zt", "<Cmd>ZkTags<CR>", opts)
-      vim.api.nvim_set_keymap("n", "<leader>zf",
-        "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>", opts)
-      vim.api.nvim_set_keymap("v", "<leader>zf", ":'<,'>ZkMatch<CR>", opts)
-      vim.api.nvim_set_keymap("n", "<leader>zl", "<Cmd>ZkInsertLink { tags = { 'permanent' } }<CR>", opts)
-      vim.api.nvim_set_keymap("v", "<leader>zl", ":'<,'>ZkInsertLinkAtSelection { tags = { 'permanent' } }<CR>", opts)
+      {
+        "<leader>zo",
+        "<Cmd>ZkNotes { sort = { 'modified' }, hrefs = { 'atomic', 'literature' } }<CR>",
+        desc = "Search through the recently modified zettelkasten notes",
+      },
+
+      {
+        "<leader>zf",
+        function()
+          vim.ui.input({ prompt = "Search: " }, function(value)
+            if not value or value == "" then return end
+            require("zk").edit({ match = { value }, sort = { 'modified' }, hrefs = { "atomic", "literature" } })
+          end)
+        end,
+        desc = "Grep through zettelkasten notes.",
+      },
+
+      {
+        "<leader>zt",
+        "<Cmd>ZkTags { hrefs = { 'atomic', 'literature' } }<CR>",
+        desc = "Search through the tags used for the zettelkasten notes.",
+      },
+
+      {
+        "<leader>jd",
+        "<Cmd>ZkNew { dir = 'journal/daily' }<CR>",
+        desc = "Create a new journal note."
+      },
+
+      {
+        "<leader>jo",
+        "<Cmd>ZkNotes { tags = { 'daily' }, sort = { 'modified' } }<CR>",
+        desc = "Search through the notes that have daily tag",
+      },
+    },
+    config = function(_, opts)
+      require("zk").setup(opts)
     end
   }
 }
