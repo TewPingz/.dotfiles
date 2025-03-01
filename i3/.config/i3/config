@@ -23,6 +23,7 @@ font pango:JetbrainsMonoNerdFont 14
 # This does not do anything if there is no ultrawide monitor
 # connected
 exec --no-startup-id ~/.config/i3/scripts/layout_16_9_center.sh
+exec --no-startup-id setxkbmap -option caps:escape
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
