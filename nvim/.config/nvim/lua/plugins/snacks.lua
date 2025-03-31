@@ -15,9 +15,6 @@ return {
 			},
 			picker = {
 				enabled = true,
-				layout = {
-					preset = "ivy",
-				},
 			},
 			notifier = {
 				enabled = true,
@@ -26,9 +23,6 @@ return {
 				enabled = true,
 			},
 			scope = {
-				enabled = true,
-			},
-			scroll = {
 				enabled = true,
 			},
 			statuscolumn = {
@@ -119,6 +113,27 @@ return {
 					Snacks.picker.lsp_type_definitions()
 				end,
 				desc = "Goto T[y]pe Definition",
+			},
+			{
+				"<leader>sd",
+				function()
+					Snacks.picker.diagnostics()
+				end,
+				desc = "Diagnostics",
+			},
+			{
+				"<leader>sD",
+				function()
+					Snacks.picker.diagnostics_buffer()
+				end,
+				desc = "Buffer Diagnostics",
+			},
+			{
+				"<leader>sb",
+				function()
+					Snacks.picker.lines()
+				end,
+				desc = "Buffer Lines",
 			},
 		},
 	},
