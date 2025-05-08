@@ -9,5 +9,9 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 
 vim.diagnostic.config({
-  virtual_text = true, -- set to false to disable inline errors
+	virtual_text = true, -- set to false to disable inline errors
 })
+
+vim.opt.foldenable = true -- enable folding
+vim.opt.foldmethod = "indent" -- or "manual", "marker", "syntax", etc.
+vim.opt.foldlevel = 99 -- open all folds by default
