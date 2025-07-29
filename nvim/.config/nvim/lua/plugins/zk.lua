@@ -26,7 +26,7 @@ return {
         function()
           vim.ui.input({ prompt = "Note Title: " }, function(title)
             if not title or title == "" then return end
-            vim.ui.select({ "Literature", "Atomic" }, { prompt = "Note Type: " }, function(template)
+            vim.ui.select({ "Fleeting", "Literature", "Atomic" }, { prompt = "Note Type: " }, function(template)
               if not template or template == "" then return end
               require("zk").new({ title = title, dir = string.lower(template) })
             end)
@@ -60,7 +60,7 @@ return {
 
       {
         "<leader>jd",
-        "<Cmd>ZkNew { dir = 'journal/daily' }<CR>",
+        "<Cmd>ZkNew { dir = 'journal' }<CR>",
         desc = "Create a new journal note."
       },
 
