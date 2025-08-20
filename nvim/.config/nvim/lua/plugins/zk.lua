@@ -46,7 +46,7 @@ return {
         function()
           vim.ui.input({ prompt = "Search: " }, function(value)
             if not value or value == "" then return end
-            require("zk").edit({ match = { value }, sort = { 'modified' }, hrefs = { "atomic", "literature" } })
+            require("zk").edit({ match = { value }, sort = { 'modified' }, hrefs = { "atomic", "literature", "fleeting" } })
           end)
         end,
         desc = "Grep through zettelkasten notes.",
@@ -56,6 +56,33 @@ return {
         "<leader>zt",
         "<Cmd>ZkTags { hrefs = { 'atomic', 'literature' } }<CR>",
         desc = "Search through the tags used for the zettelkasten notes.",
+      },
+
+      {
+        "<leader>zci",
+        function()
+          vim.ui.input({ prompt = "Clipboard Image Name: " }, function(title)
+            if not title or title == "" then return end
+
+            -- Destination directory
+            local asset_dir = vim.fn.expand("~/notes/assets")
+            vim.fn.mkdir(asset_dir, "p")
+
+            -- Filename with extension
+            local filename = title:match("%.png$") and title or (title .. ".png")
+            local filepath = asset_dir .. "/" .. filename
+
+            -- Save clipboard image (Linux xclip example)
+            os.execute(string.format("xclip -selection clipboard -t image/png -o > %q", filepath))
+
+            -- Insert Markdown image link
+            local rel_path = string.format("../assets/%s", filename)
+            vim.api.nvim_put({ string.format("![](%s)", rel_path) }, "l", true, true)
+
+            vim.notify("Image saved to " .. filepath)
+          end)
+        end,
+        desc = "Paste clipboard image into ~/notes/img/"
       },
 
       {
